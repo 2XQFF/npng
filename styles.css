@@ -61,11 +61,15 @@ h1 em { color:var(--green); font-style:normal; }
 .question-type { color:var(--green); font-size:13px; font-weight:700; }
 .question { margin:26px 0 6px; font:500 clamp(31px,5vw,49px)/1.35 "Noto Sans JP",sans-serif; letter-spacing:-.03em; }
 .question.is-korean { font-family:"Gowun Batang",serif; font-weight:700; }
+.question ruby { ruby-align:center; }
+ruby { ruby-position:over; }
+rt { color:var(--green); font:500 .42em/1 "Noto Sans JP",sans-serif; letter-spacing:.02em; }
 .reading { min-height:22px; margin-bottom:32px; color:#87948c; font:13px "Noto Sans JP",sans-serif; }
 .choices { display:grid; grid-template-columns:1fr 1fr; gap:11px; }
 .choice { display:flex; align-items:center; gap:13px; min-height:68px; padding:13px 16px; text-align:left; background:white; border:1px solid var(--line); cursor:pointer; transition:.18s ease; }
 .choice:hover:not(:disabled) { border-color:var(--green); transform:translateY(-2px); } .choice:disabled { cursor:default; }
 .choice .letter { display:grid; flex:0 0 29px; place-items:center; width:29px; height:29px; color:#76827b; background:#eeede6; border-radius:50%; font:11px "Noto Sans JP",sans-serif; }
+.choice .jp-choice { font:500 17px/1.7 "Noto Sans JP",sans-serif; }
 .choice.correct { color:var(--deep-green); background:#edf7e7; border-color:var(--green); } .choice.correct .letter { color:white; background:var(--green); }
 .choice.wrong { color:#8d3a31; background:#faece9; border-color:var(--red); } .choice.wrong .letter { color:white; background:var(--red); }
 .feedback { margin-top:22px; padding:18px 20px; background:#efeee7; border-left:3px solid var(--green); } .feedback.is-wrong { border-left-color:var(--red); }

@@ -21,6 +21,58 @@ function shuffle(list) {
   return result;
 }
 
+function escapeHtml(value) {
+  return value.replace(/[&<>"']/g, (character) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;",
+  })[character]);
+}
+
+const kanjiRunPattern = /([\p{Script=Han}々〆ヵヶ]+)/gu;
+const kanjiOnlyPattern = /^[\p{Script=Han}々〆ヵヶ]+$/u;
+
+function primaryReading(reading) {
+  return reading.split(/[／/]/)[0].replace(/[～\s]/g, "");
+}
+
+function furiganaHtml(word) {
+  const reading = primaryReading(word.reading);
+  const segments = word.jp.split(kanjiRunPattern).filter(Boolean);
+  let cursor = 0;
+
+  return segments.map((segment, index) => {
+    if (!kanjiOnlyPattern.test(segment)) {
+      const literal = segment.replace(/[～\s]/g, "");
+      if (literal) {
+        const position = reading.indexOf(literal, cursor);
+        if (position >= cursor) cursor = position + literal.length;
+      }
+      return escapeHtml(segment);
+    }
+
+    const nextLiteral = segments.slice(index + 1)
+      .find((part) => !kanjiOnlyPattern.test(part) && part.replace(/[～\s]/g, ""));
+    const nextText = nextLiteral?.replace(/[～\s]/g, "") || "";
+    const nextPosition = nextText ? reading.lastIndexOf(nextText) : -1;
+    const rubyText = nextPosition >= cursor ? reading.slice(cursor, nextPosition) : reading.slice(cursor);
+    cursor += rubyText.length;
+
+    return rubyText
+      ? `<ruby>${escapeHtml(segment)}<rt>${escapeHtml(rubyText)}</rt></ruby>`
+      : escapeHtml(segment);
+  }).join("");
+}
+
+function exampleHtml(word, example) {
+  if (!example) return furiganaHtml(word);
+  const position = example.indexOf(word.jp);
+  if (position < 0) return escapeHtml(example);
+  return `${escapeHtml(example.slice(0, position))}${furiganaHtml(word)}${escapeHtml(example.slice(position + word.jp.length))}`;
+}
+
 function showScreen(screen) {
   screens.forEach((item) => item.classList.toggle("is-active", item === screen));
   window.scrollTo({ top: 0, behavior: "smooth" });
@@ -86,16 +138,17 @@ function renderQuestion() {
     : "이 뜻에 맞는 일본어 표현은?";
 
   const question = document.querySelector("#question");
-  question.textContent = isJpKo ? word.jp : word.ko;
+  if (isJpKo) question.innerHTML = furiganaHtml(word);
+  else question.textContent = word.ko;
   question.classList.toggle("is-korean", !isJpKo);
   document.querySelector("#reading").textContent = isJpKo
-    ? `${word.reading} · ${categoryNames[word.category]}`
+    ? categoryNames[word.category]
     : `${categoryNames[word.category]} · 알맞은 표현을 고르세요`;
 
   choices.innerHTML = buildOptions(word).map((item, index) => `
     <button class="choice" type="button" data-id="${item.id}">
       <span class="letter">${String.fromCharCode(65 + index)}</span>
-      <span>${isJpKo ? item.ko : item.jp}</span>
+      <span class="${isJpKo ? "" : "jp-choice"}">${isJpKo ? escapeHtml(item.ko) : furiganaHtml(item)}</span>
     </button>
   `).join("");
 
@@ -145,7 +198,7 @@ choices.addEventListener("click", (event) => {
     ? "정답이에요"
     : `정답은 ${direction === "jp-ko" ? word.ko : word.jp}`;
   document.querySelector("#feedbackNote").textContent = explanation;
-  document.querySelector("#exampleJp").textContent = example || `${word.jp}【${word.reading}】`;
+  document.querySelector("#exampleJp").innerHTML = exampleHtml(word, example);
   document.querySelector("#exampleKo").textContent = categoryNames[word.category];
   document.querySelector("#scoreLabel").textContent = `정답 ${score}`;
   nextButton.innerHTML = current === questions.length - 1
