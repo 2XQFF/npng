@@ -1,0 +1,77 @@
+:root { --ink:#13372d; --green:#71ad32; --paper:#f2efe5; --card:#fbfaf5; --line:#d7d5ca; --muted:#718078; --red:#cf614d; --shadow:0 28px 80px rgba(15,45,36,.13); }
+* { box-sizing:border-box; }
+[hidden] { display:none!important; }
+html { scroll-behavior:smooth; }
+body { margin:0; min-height:100vh; color:var(--ink); background:var(--paper); font-family:"Gowun Batang",serif; -webkit-font-smoothing:antialiased; }
+button,input { font:inherit; } button { color:inherit; }
+.topbar,main,footer { width:min(1180px,calc(100% - 48px)); margin-inline:auto; }
+.topbar { display:flex; align-items:center; justify-content:space-between; height:88px; border-bottom:1px solid var(--line); }
+.logo { display:flex; align-items:center; gap:11px; color:inherit; text-decoration:none; font:10px/1.25 "Noto Sans JP",sans-serif; letter-spacing:.13em; }
+.logo strong { font-size:12px; }
+.logo-mark { display:grid; place-items:center; width:38px; height:38px; color:white; background:var(--ink); border-radius:50%; font-size:16px; letter-spacing:0; }
+.line-badge { display:flex; align-items:center; gap:9px; color:var(--muted); font:11px "Noto Sans JP",sans-serif; letter-spacing:.12em; }
+.line-badge span { width:26px; height:3px; background:var(--green); }
+main { min-height:calc(100vh - 152px); }
+.screen { display:none; } .screen.is-active { display:block; }
+.start-screen { position:relative; min-height:720px; overflow:hidden; padding:72px 0 95px; }
+.intro { position:relative; z-index:2; width:min(600px,100%); }
+.eyebrow { margin:0 0 20px; color:var(--green); font:700 11px "Noto Sans JP",sans-serif; letter-spacing:.17em; }
+h1 { margin:0; font-size:clamp(46px,6.2vw,76px); line-height:1.17; letter-spacing:-.055em; font-weight:400; }
+h1 em { color:var(--green); font-style:normal; }
+.lead { max-width:550px; margin:24px 0 35px; color:#596b63; font-size:16px; line-height:1.9; }
+.mode-picker { display:grid; gap:9px; margin:0 0 24px; padding:0; border:0; }
+.mode-picker legend { margin-bottom:11px; color:#6d7b74; font-size:12px; }
+.mode-option { display:grid; grid-template-columns:42px 1fr 23px; align-items:center; gap:14px; max-width:520px; padding:14px 17px; background:rgba(255,255,255,.42); border:1px solid var(--line); cursor:pointer; transition:.2s ease; }
+.mode-option:hover { border-color:#9eb38f; background:rgba(255,255,255,.75); }
+.mode-option.is-selected { border-color:var(--green); background:#f9fbf3; box-shadow:0 0 0 1px var(--green); }
+.mode-option input { position:absolute; opacity:0; pointer-events:none; }
+.mode-icon { display:grid; place-items:center; width:38px; height:38px; color:var(--ink); background:#e8eadf; border-radius:50%; font:700 15px "Noto Sans JP",sans-serif; }
+.mode-option.is-selected .mode-icon { color:white; background:var(--green); }
+.mode-option strong,.mode-option small { display:block; } .mode-option strong { margin-bottom:3px; font-size:14px; } .mode-option small { color:#7d8982; font-size:11px; }
+.mode-option i { visibility:hidden; display:grid; place-items:center; width:20px; height:20px; color:white; background:var(--green); border-radius:50%; font:normal 11px sans-serif; }
+.mode-option.is-selected i { visibility:visible; }
+.primary-button,.secondary-button,.next-button { border:0; cursor:pointer; transition:transform .18s ease,background .18s ease; }
+.primary-button { display:flex; justify-content:space-between; align-items:center; width:min(520px,100%); padding:17px 20px; color:white; background:var(--ink); font-size:15px; }
+.primary-button:hover { background:#1c4a3c; transform:translateY(-2px); }
+.route-art { position:absolute; z-index:1; width:510px; height:510px; right:-30px; top:102px; }
+.rail { position:absolute; border:2px solid var(--green); border-radius:50%; } .rail-outer { inset:0; opacity:.22; box-shadow:0 0 0 17px rgba(112,173,50,.04),0 0 0 18px rgba(112,173,50,.13); } .rail-inner { inset:28px; opacity:.75; }
+.station { position:absolute; z-index:2; width:13px; height:13px; background:var(--paper); border:3px solid var(--green); border-radius:50%; }
+.s1 { left:79px; top:82px; }.s2 { right:76px; top:95px; }.s3 { right:5px; top:258px; }.s4 { left:104px; bottom:50px; }.s5 { left:1px; top:240px; }
+.train { position:absolute; z-index:3; right:29px; top:161px; padding:7px 11px; color:white; background:var(--green); border-radius:5px; font:700 11px "Noto Sans JP",sans-serif; transform:rotate(73deg); box-shadow:0 8px 16px rgba(47,87,31,.18); }
+.route-art p { position:absolute; inset:0; display:grid; place-content:center; margin:0; text-align:center; color:#87938c; font-size:20px; line-height:1.75; }
+.quiz-screen { padding:44px 0 95px; }
+.quiz-header { display:flex; align-items:center; gap:40px; width:min(820px,100%); margin:0 auto 28px; }
+.text-button { flex:0 0 auto; padding:8px 0; color:var(--muted); background:none; border:0; cursor:pointer; font-size:12px; }
+.progress-wrap { flex:1; } .progress-meta { display:flex; justify-content:space-between; margin-bottom:9px; color:#7f8a83; font:11px "Noto Sans JP",sans-serif; }
+.progress-track { height:5px; overflow:hidden; background:#dcdacf; border-radius:99px; } .progress-track span { display:block; width:10%; height:100%; background:var(--green); border-radius:inherit; transition:width .35s ease; }
+.quiz-card { width:min(820px,100%); min-height:560px; margin:0 auto; padding:48px 58px; background:var(--card); border:1px solid #dfddd2; box-shadow:var(--shadow); }
+.question-type { color:var(--green); font-size:13px; font-weight:700; }
+.question { margin:26px 0 6px; font:500 clamp(31px,5vw,49px)/1.35 "Noto Sans JP",sans-serif; letter-spacing:-.03em; }
+.question.is-korean { font-family:"Gowun Batang",serif; font-weight:700; }
+.reading { min-height:22px; margin-bottom:32px; color:#87948c; font:13px "Noto Sans JP",sans-serif; }
+.choices { display:grid; grid-template-columns:1fr 1fr; gap:11px; }
+.choice { display:flex; align-items:center; gap:13px; min-height:68px; padding:13px 16px; text-align:left; background:white; border:1px solid var(--line); cursor:pointer; transition:.18s ease; }
+.choice:hover:not(:disabled) { border-color:var(--green); transform:translateY(-2px); } .choice:disabled { cursor:default; }
+.choice .letter { display:grid; flex:0 0 29px; place-items:center; width:29px; height:29px; color:#76827b; background:#eeede6; border-radius:50%; font:11px "Noto Sans JP",sans-serif; }
+.choice.correct { color:#285c23; background:#eef7e6; border-color:var(--green); } .choice.correct .letter { color:white; background:var(--green); }
+.choice.wrong { color:#8d3a31; background:#faece9; border-color:var(--red); } .choice.wrong .letter { color:white; background:var(--red); }
+.feedback { margin-top:22px; padding:18px 20px; background:#efeee7; border-left:3px solid var(--green); } .feedback.is-wrong { border-left-color:var(--red); }
+.feedback-title { display:flex; align-items:center; gap:9px; } .feedback-title span { font-family:sans-serif; }
+.feedback p { margin:9px 0 0; color:#59675f; font-size:13px; line-height:1.7; }
+.example { padding-top:11px; border-top:1px solid #d9d8d0; } .example span,.example small { display:block; } .example span { color:var(--ink); font:14px "Noto Sans JP",sans-serif; } .example small { margin-top:3px; color:#7f8b84; }
+.next-button { display:block; margin:20px 0 0 auto; padding:13px 18px; color:white; background:var(--ink); } .next-button:hover { background:#1c4a3c; }
+.result-screen { padding:62px 0 110px; }
+.result-card { width:min(720px,100%); margin:0 auto; padding:55px 65px; text-align:center; background:var(--card); border:1px solid #dfddd2; box-shadow:var(--shadow); }
+.result-ring { display:grid; place-content:center; width:155px; height:155px; margin:22px auto 27px; background:conic-gradient(var(--green) var(--score-angle,0deg),#e1e0d7 0); border-radius:50%; position:relative; }
+.result-ring::before { content:""; position:absolute; inset:11px; background:var(--card); border-radius:50%; } .result-ring strong,.result-ring span { position:relative; z-index:1; }
+.result-ring strong { font:500 52px "Noto Sans JP",sans-serif; } .result-ring span { color:var(--muted); font:12px "Noto Sans JP",sans-serif; }
+.result-card h2 { margin:0 0 10px; font-size:33px; } .result-card>p:not(.eyebrow) { margin:0; color:var(--muted); line-height:1.8; }
+.result-stats { display:grid; grid-template-columns:repeat(3,1fr); margin:36px 0 30px; border-block:1px solid var(--line); }
+.result-stats div { padding:20px 8px; } .result-stats div+div { border-left:1px solid var(--line); } .result-stats span,.result-stats strong { display:block; }
+.result-stats span { margin-bottom:6px; color:var(--muted); font-size:11px; } .result-stats strong { font:500 23px "Noto Sans JP",sans-serif; }
+.result-actions { display:flex; gap:10px; } .result-actions .primary-button { justify-content:center; gap:30px; }
+.secondary-button { width:45%; padding:16px; background:transparent; border:1px solid var(--ink); } .secondary-button:hover { background:#edf0e8; transform:translateY(-2px); } .secondary-button:disabled { opacity:.35; cursor:not-allowed; transform:none; }
+footer { display:flex; justify-content:space-between; padding:24px 0 34px; color:#7e8982; border-top:1px solid var(--line); font-size:11px; }
+@media (max-width:900px) { .route-art { right:-280px; opacity:.65; } .intro { width:min(620px,100%); } }
+@media (max-width:620px) { .topbar,main,footer { width:calc(100% - 30px); } .topbar { height:72px; } .line-badge { display:none; } .start-screen { padding-top:48px; } h1 { font-size:43px; } .route-art { display:none; } .quiz-screen { padding-top:24px; } .quiz-header { gap:18px; } .quiz-card { min-height:auto; padding:33px 21px; } .choices { grid-template-columns:1fr; } .result-card { padding:43px 22px; } .result-stats strong { font-size:19px; } .result-actions { flex-direction:column; } .result-actions .primary-button,.secondary-button { width:100%; } footer { gap:8px; flex-direction:column; } }
+@media (prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto!important; transition-duration:.01ms!important; } }

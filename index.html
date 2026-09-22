@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#102d25" />
+    <meta name="description" content="야마노테선 문장에서 배운 일본어 표현을 복습하는 단어 퀴즈" />
+    <title>야마노테 일본어 퀴즈</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="logo" href="#" aria-label="처음 화면">
+        <span class="logo-mark">山</span>
+        <span>YAMANOTE<br /><strong>WORD QUIZ</strong></span>
+      </a>
+      <div class="line-badge"><span></span> 山手線で読む日本語</div>
+    </header>
+
+    <main>
+      <section class="start-screen screen is-active" id="startScreen">
+        <div class="intro">
+          <p class="eyebrow">16 WORDS · 10 QUESTIONS</p>
+          <h1>읽었던 표현,<br /><em>진짜 내 것이 됐을까?</em></h1>
+          <p class="lead">야마노테선 소개 문단에서 살펴본 훈독 동사와 문법 표현을 퀴즈로 복습해 보세요.</p>
+
+          <fieldset class="mode-picker">
+            <legend>문제 방식</legend>
+            <label class="mode-option is-selected">
+              <input type="radio" name="mode" value="jp-ko" checked />
+              <span class="mode-icon">あ</span>
+              <span><strong>일본어 → 뜻</strong><small>표현에 맞는 한국어 뜻 고르기</small></span>
+              <i>✓</i>
+            </label>
+            <label class="mode-option">
+              <input type="radio" name="mode" value="ko-jp" />
+              <span class="mode-icon">가</span>
+              <span><strong>뜻 → 일본어</strong><small>뜻에 맞는 일본어 표현 고르기</small></span>
+              <i>✓</i>
+            </label>
+            <label class="mode-option">
+              <input type="radio" name="mode" value="mixed" />
+              <span class="mode-icon">↔</span>
+              <span><strong>섞어서</strong><small>두 가지 방식을 무작위로 풀기</small></span>
+              <i>✓</i>
+            </label>
+          </fieldset>
+
+          <button class="primary-button" id="startButton" type="button">
+            <span>퀴즈 시작</span><span aria-hidden="true">→</span>
+          </button>
+        </div>
+
+        <div class="route-art" aria-hidden="true">
+          <div class="rail rail-outer"></div><div class="rail rail-inner"></div>
+          <span class="station s1"></span><span class="station s2"></span><span class="station s3"></span>
+          <span class="station s4"></span><span class="station s5"></span>
+          <div class="train">山手</div>
+          <p>ひと駅ずつ、<br />ひとことずつ。</p>
+        </div>
+      </section>
+
+      <section class="quiz-screen screen" id="quizScreen" aria-live="polite">
+        <div class="quiz-header">
+          <button class="text-button" id="quitButton" type="button">← 처음으로</button>
+          <div class="progress-wrap">
+            <div class="progress-meta"><span id="questionNumber">01 / 10</span><span id="scoreLabel">정답 0</span></div>
+            <div class="progress-track"><span id="progressBar"></span></div>
+          </div>
+        </div>
+        <article class="quiz-card">
+          <div class="question-type" id="questionType">이 표현의 뜻은?</div>
+          <div class="question" id="question"></div>
+          <div class="reading" id="reading"></div>
+          <div class="choices" id="choices"></div>
+          <div class="feedback" id="feedback" hidden>
+            <div class="feedback-title"><span id="feedbackIcon"></span><strong id="feedbackTitle"></strong></div>
+            <p id="feedbackNote"></p>
+            <p class="example"><span id="exampleJp"></span><small id="exampleKo"></small></p>
+          </div>
+          <button class="next-button" id="nextButton" type="button" hidden>다음 문제 <span>→</span></button>
+        </article>
+      </section>
+
+      <section class="result-screen screen" id="resultScreen">
+        <div class="result-card">
+          <p class="eyebrow">QUIZ COMPLETE</p>
+          <div class="result-ring" id="resultRing"><strong id="finalScore">0</strong><span>/ 10</span></div>
+          <h2 id="resultTitle">좋은 출발이에요!</h2>
+          <p id="resultMessage"></p>
+          <div class="result-stats">
+            <div><span>정답률</span><strong id="accuracy">0%</strong></div>
+            <div><span>연속 정답</span><strong id="bestStreak">0</strong></div>
+            <div><span>복습할 표현</span><strong id="wrongCount">0</strong></div>
+          </div>
+          <div class="result-actions">
+            <button class="primary-button" id="retryButton" type="button">다시 풀기 <span>↻</span></button>
+            <button class="secondary-button" id="reviewButton" type="button">오답만 보기</button>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer><span>山手線 문장 복습</span><span>한 역씩, 한 표현씩.</span></footer>
+    <script src="script.js"></script>
+  </body>
+</html>
