@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#102d25" />
-    <meta name="description" content="야마노테선 문장에서 배운 일본어 표현을 복습하는 단어 퀴즈" />
-    <title>야마노테 일본어 퀴즈</title>
+    <meta name="description" content="최근에 배운 일본어 표현을 복습하는 단어 퀴즈" />
+    <title>일본어 단어 퀴즈</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet" />
@@ -14,18 +14,18 @@
   <body>
     <header class="topbar">
       <a class="logo" href="#" aria-label="처음 화면">
-        <span class="logo-mark">山</span>
-        <span>YAMANOTE<br /><strong>WORD QUIZ</strong></span>
+        <span class="logo-mark">日</span>
+        <span>JAPANESE<br /><strong>WORD QUIZ</strong></span>
       </a>
-      <div class="line-badge"><span></span> 山手線で読む日本語</div>
+      <div class="line-badge"><span></span> ことばを楽しく覚えよう</div>
     </header>
 
     <main>
       <section class="start-screen screen is-active" id="startScreen">
         <div class="intro">
-          <p class="eyebrow">16 WORDS · 10 QUESTIONS</p>
+          <p class="eyebrow">VOCABULARY PRACTICE · 10 QUESTIONS</p>
           <h1>읽었던 표현,<br /><em>진짜 내 것이 됐을까?</em></h1>
-          <p class="lead">야마노테선 소개 문단에서 살펴본 훈독 동사와 문법 표현을 퀴즈로 복습해 보세요.</p>
+          <p class="lead">최근에 살펴본 일본어 동사와 문법 표현을 가볍게 퀴즈로 복습해 보세요.</p>
 
           <fieldset class="mode-picker">
             <legend>문제 방식</legend>
@@ -54,12 +54,11 @@
           </button>
         </div>
 
-        <div class="route-art" aria-hidden="true">
-          <div class="rail rail-outer"></div><div class="rail rail-inner"></div>
-          <span class="station s1"></span><span class="station s2"></span><span class="station s3"></span>
-          <span class="station s4"></span><span class="station s5"></span>
-          <div class="train">山手</div>
-          <p>ひと駅ずつ、<br />ひとことずつ。</p>
+        <div class="quiz-preview" aria-hidden="true">
+          <p class="preview-label">TODAY'S QUIZ</p>
+          <div class="preview-word"><span>ことば</span><small>단어 · 말</small></div>
+          <div class="preview-options"><i>A</i><i>B</i><i>C</i><i>D</i></div>
+          <p class="preview-copy">知っている言葉を<br />ひとつずつ増やそう。</p>
         </div>
       </section>
 
@@ -103,7 +102,7 @@
         </div>
       </section>
     </main>
-    <footer><span>山手線 문장 복습</span><span>한 역씩, 한 표현씩.</span></footer>
+    <footer><span>일본어 단어 퀴즈</span><span>하나씩 익히고, 바로 확인하기.</span></footer>
     <script src="script.js"></script>
   </body>
 </html>

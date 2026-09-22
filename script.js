@@ -47,7 +47,7 @@ choices.addEventListener("click",event=>{
 function finishQuiz(){
   const total=questions.length,percent=Math.round(score/total*100);document.querySelector("#finalScore").textContent=score;document.querySelector("#finalScore").nextElementSibling.textContent=`/ ${total}`;
   document.querySelector("#accuracy").textContent=`${percent}%`;document.querySelector("#bestStreak").textContent=bestStreak;document.querySelector("#wrongCount").textContent=mistakes.length;
-  document.querySelector("#resultRing").style.setProperty("--score-angle",`${percent*3.6}deg`);document.querySelector("#resultTitle").textContent=percent===100?"전 구간 완주!":percent>=80?"거의 다 왔어요!":percent>=50?"좋은 흐름이에요!":"한 번 더 달려볼까요?";
+  document.querySelector("#resultRing").style.setProperty("--score-angle",`${percent*3.6}deg`);document.querySelector("#resultTitle").textContent=percent===100?"완벽하게 익혔어요!":percent>=80?"거의 다 맞혔어요!":percent>=50?"좋은 흐름이에요!":"한 번 더 풀어볼까요?";
   document.querySelector("#resultMessage").textContent=percent===100?"모든 표현을 정확히 기억하고 있어요.":`${mistakes.length}개 표현만 다시 보면 훨씬 단단해질 거예요.`;document.querySelector("#reviewButton").disabled=mistakes.length===0;showScreen(resultScreen);
 }
 nextButton.addEventListener("click",()=>{if(current<questions.length-1){current++;renderQuestion();}else finishQuiz();});
