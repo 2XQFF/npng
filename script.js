@@ -4,6 +4,9 @@ const quizScreen = document.querySelector("#quizScreen");
 const resultScreen = document.querySelector("#resultScreen");
 const nextButton = document.querySelector("#nextButton");
 const choices = document.querySelector("#choices");
+const answerForm = document.querySelector("#answerForm");
+const answerInput = document.querySelector("#answerInput");
+const answerButton = document.querySelector("#answerButton");
 
 let questions = [];
 let current = 0;
@@ -143,19 +146,37 @@ function renderQuestion() {
   question.classList.toggle("is-korean", !isJpKo);
   document.querySelector("#reading").textContent = isJpKo
     ? categoryNames[word.category]
-    : `${categoryNames[word.category]} · 알맞은 표현을 고르세요`;
+    : `${categoryNames[word.category]} · 한자 또는 히라가나로 입력하세요`;
 
-  choices.innerHTML = buildOptions(word).map((item, index) => `
+  choices.hidden = !isJpKo;
+  answerForm.hidden = isJpKo;
+  choices.innerHTML = isJpKo ? buildOptions(word).map((item, index) => `
     <button class="choice" type="button" data-id="${item.id}">
       <span class="letter">${String.fromCharCode(65 + index)}</span>
-      <span class="${isJpKo ? "" : "jp-choice"}">${isJpKo ? escapeHtml(item.ko) : furiganaHtml(item)}</span>
+      <span>${escapeHtml(item.ko)}</span>
     </button>
-  `).join("");
+  `).join("") : "";
+  answerInput.value = "";
+  answerInput.disabled = false;
+  answerButton.disabled = false;
+  answerForm.classList.remove("is-correct", "is-wrong");
+  if (!isJpKo) requestAnimationFrame(() => answerInput.focus());
 
   const feedback = document.querySelector("#feedback");
   feedback.hidden = true;
   feedback.classList.remove("is-wrong");
   nextButton.hidden = true;
+}
+
+function normalizeJapanese(value) {
+  return value.normalize("NFKC").replace(/\s/g, "").replace(/^[~〜～]/, "");
+}
+
+function isTypedAnswerCorrect(word, value) {
+  const submitted = normalizeJapanese(value);
+  const accepted = [word.jp, ...word.reading.split(/[／/]/)]
+    .map(normalizeJapanese);
+  return accepted.includes(submitted);
 }
 
 function splitNote(note) {
@@ -168,23 +189,25 @@ function splitNote(note) {
   };
 }
 
-choices.addEventListener("click", (event) => {
-  const selected = event.target.closest(".choice");
-  if (!selected || selected.disabled) return;
-
+function completeAnswer(correct, selected = null) {
   const { word, direction } = questions[current];
-  const correct = Number(selected.dataset.id) === word.id;
-  [...choices.children].forEach((button) => {
-    button.disabled = true;
-    if (Number(button.dataset.id) === word.id) button.classList.add("correct");
-  });
+  if (direction === "jp-ko") {
+    [...choices.children].forEach((button) => {
+      button.disabled = true;
+      if (Number(button.dataset.id) === word.id) button.classList.add("correct");
+    });
+    if (!correct && selected) selected.classList.add("wrong");
+  } else {
+    answerInput.disabled = true;
+    answerButton.disabled = true;
+    answerForm.classList.add(correct ? "is-correct" : "is-wrong");
+  }
 
   if (correct) {
     score += 1;
     streak += 1;
     bestStreak = Math.max(bestStreak, streak);
   } else {
-    selected.classList.add("wrong");
     streak = 0;
     if (!mistakes.some((item) => item.id === word.id)) mistakes.push(word);
   }
@@ -205,6 +228,20 @@ choices.addEventListener("click", (event) => {
     ? '결과 보기 <span>→</span>'
     : '다음 문제 <span>→</span>';
   nextButton.hidden = false;
+}
+
+choices.addEventListener("click", (event) => {
+  const selected = event.target.closest(".choice");
+  if (!selected || selected.disabled) return;
+  const { word } = questions[current];
+  completeAnswer(Number(selected.dataset.id) === word.id, selected);
+});
+
+answerForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  if (answerInput.disabled || !answerInput.value.trim()) return;
+  const { word } = questions[current];
+  completeAnswer(isTypedAnswerCorrect(word, answerInput.value));
 });
 
 function finishQuiz() {
@@ -249,6 +286,6 @@ document.querySelector("#reviewButton").addEventListener("click", () => {
 
 document.addEventListener("keydown", (event) => {
   if (!quizScreen.classList.contains("is-active")) return;
-  if (["1", "2", "3", "4"].includes(event.key)) choices.children[Number(event.key) - 1]?.click();
+  if (!choices.hidden && ["1", "2", "3", "4"].includes(event.key)) choices.children[Number(event.key) - 1]?.click();
   if (event.key === "Enter" && !nextButton.hidden) nextButton.click();
 });
